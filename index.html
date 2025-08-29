@@ -2,16 +2,23 @@
 <html lang="as">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>মোৰ প্ৰথম Website</title>
+  <title>Firebase Auth Demo</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>নমস্কাৰ বিশ্ব! 🌏</h1>
-  <p>এয়া মোৰ প্ৰথম ৱেবচাইট 🚀</p>
+  <h2>🔥 Firebase Authentication Test</h2>
 
-  <button onclick="sayHello()">ক্লিক কৰক</button>
+  <input type="email" id="email" placeholder="Enter email">
+  <input type="password" id="password" placeholder="Enter password">
 
-  <script src="script.js"></script>
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <button onclick="googleLogin()">Sign in with Google</button>
+  <button onclick="logout()">Logout</button>
+
+  <p id="status">Not logged in</p>
+
+  <!-- Attach JavaScript -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
