@@ -2,23 +2,32 @@
 <html lang="as">
 <head>
   <meta charset="UTF-8">
-  <title>Firebase Auth Demo</title>
+  <title>🔥 Firebase Authentication Test</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h2>🔥 Firebase Authentication Test</h2>
 
-  <input type="email" id="email" placeholder="Enter email">
-  <input type="password" id="password" placeholder="Enter password">
+  <!-- Dark Mode Toggle -->
+  <button id="darkToggle">🌙 Dark Mode</button>
 
-  <button onclick="signup()">Sign Up</button>
-  <button onclick="login()">Login</button>
-  <button onclick="googleLogin()">Sign in with Google</button>
-  <button onclick="logout()">Logout</button>
+  <!-- Login Form -->
+  <div class="auth-box">
+    <input type="email" id="email" placeholder="Enter email">
+    <input type="password" id="password" placeholder="Enter password">
+    <br>
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Login</button>
+    <button onclick="googleLogin()">Sign in with Google</button>
+    <button onclick="logout()">Logout</button>
+  </div>
 
-  <p id="status">Not logged in</p>
+  <!-- User Status Card -->
+  <div class="status-card" id="status">
+    Not logged in
+  </div>
 
-  <!-- Attach JavaScript -->
   <script type="module" src="script.js"></script>
+  <script src="theme.js"></script>
 </body>
 </html>

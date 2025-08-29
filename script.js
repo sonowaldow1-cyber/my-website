@@ -1,17 +1,14 @@
-// Import Firebase SDKs
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup
-} from "firebase/auth";
+// Import Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, 
+         createUserWithEmailAndPassword, 
+         signInWithEmailAndPassword, 
+         signOut, 
+         GoogleAuthProvider, 
+         signInWithPopup, 
+         onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Firebase config (আপোনাৰ Firebase Project ৰ)
+// ✅ Your Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyA8eyBxqjjLuUulCdCVV9j5kQGn0AV9Eyw",
   authDomain: "my-website-e8ac5.firebaseapp.com",
@@ -24,70 +21,74 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
-
-// Google Provider
 const provider = new GoogleAuthProvider();
 
-// ========== Functions ==========
+const statusDiv = document.getElementById("status");
 
-// Sign Up (Email/Password)
+// ✨ Signup Function
 window.signup = function() {
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  createUserWithEmailAndPassword(auth, email, pass)
+  createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      alert("✅ Signup successful: " + userCredential.user.email);
+      statusDiv.innerHTML = `✅ Account created: ${userCredential.user.email}`;
     })
     .catch(error => {
-      alert("⚠️ " + error.message);
+      statusDiv.innerHTML = `❌ Error: ${error.message}`;
     });
-}
+};
 
-// Login (Email/Password)
+// ✨ Login Function
 window.login = function() {
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  signInWithEmailAndPassword(auth, email, pass)
+  signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
-      alert("✅ Login successful: " + userCredential.user.email);
+      statusDiv.innerHTML = `✅ Logged in as: ${userCredential.user.email}`;
     })
     .catch(error => {
-      alert("⚠️ " + error.message);
+      statusDiv.innerHTML = `❌ Error: ${error.message}`;
     });
-}
+};
 
-// Google Login
+// ✨ Google Login
 window.googleLogin = function() {
   signInWithPopup(auth, provider)
     .then(result => {
       const user = result.user;
-      alert("✅ Google Login successful: " + user.email);
+      statusDiv.innerHTML = `
+        <p>✅ Logged in with Google</p>
+        <p><b>${user.displayName}</b> (${user.email})</p>
+        <img src="${user.photoURL}" width="80">
+      `;
     })
     .catch(error => {
-      alert("⚠️ " + error.message);
+      statusDiv.innerHTML = `❌ Error: ${error.message}`;
     });
-}
+};
 
-// Logout
+// ✨ Logout
 window.logout = function() {
   signOut(auth)
     .then(() => {
-      alert("👋 Logged out successfully");
+      statusDiv.innerHTML = "🚪 Logged out!";
     })
     .catch(error => {
-      alert("⚠️ " + error.message);
+      statusDiv.innerHTML = `❌ Error: ${error.message}`;
     });
-}
+};
 
-// Track user state
-onAuthStateChanged(auth, user => {
+// ✨ Realtime Auth State Listener
+onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.getElementById("status").innerText = "Logged in as: " + user.email;
+    statusDiv.innerHTML = `
+      <p>✅ Logged in as: <b>${user.email}</b></p>
+      ${user.photoURL ? `<img src="${user.photoURL}" width="80">` : ""}
+    `;
   } else {
-    document.getElementById("status").innerText = "Not logged in";
+    statusDiv.innerHTML = "Not logged in";
   }
 });
