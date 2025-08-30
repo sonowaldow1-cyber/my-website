@@ -1,33 +1,9 @@
-<!DOCTYPE html>
-<html lang="as">
-<head>
-  <meta charset="UTF-8">
-  <title>🔥 Firebase Authentication Test</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h2>🔥 Firebase Authentication Test</h2>
-
-  <!-- Dark Mode Toggle -->
-  <button id="darkToggle">🌙 Dark Mode</button>
-
-  <!-- Login Form -->
-  <div class="auth-box">
-    <input type="email" id="email" placeholder="Enter email">
-    <input type="password" id="password" placeholder="Enter password">
-    <br>
-    <button onclick="signup()">Sign Up</button>
-    <button onclick="login()">Login</button>
-    <button onclick="googleLogin()">Sign in with Google</button>
-    <button onclick="logout()">Logout</button>
-  </div>
-
-  <!-- User Status Card -->
-  <div class="status-card" id="status">
-    Not logged in
-  </div>
-
-  <script type="module" src="script.js"></script>
-  <script src="theme.js"></script>
-</body>
-</html>
+<!-- User Info Card -->
+<div id="userCard" class="card hidden">
+  <h2>👤 Profile Info</h2>
+  <p><strong>Name:</strong> <span id="cardName"></span></p>
+  <p><strong>Email:</strong> <span id="cardEmail"></span></p>
+  <p><strong>Date of Birth:</strong> <span id="cardDob"></span></p>
+  <p><strong>Gender:</strong> <span id="cardGender"></span></p>
+  <button onclick="logout()">🚪 Logout</button>
+</div>

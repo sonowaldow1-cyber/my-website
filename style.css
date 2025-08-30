@@ -1,19 +1,41 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  text-align: center;
+.card {
+  max-width: 350px;
+  margin: 20px auto;
   padding: 20px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: Arial, sans-serif;
+  transition: all 0.3s ease;
 }
 
-input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 250px;
+.card h2 {
+  margin-bottom: 15px;
+  color: #333;
 }
 
-button {
-  margin: 5px;
-  padding: 10px 20px;
+.card p {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #444;
+}
+
+.card button {
+  margin-top: 15px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 15px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.card button:hover {
+  background: #e60000;
+}
+
+.hidden {
+  display: none;
 }
