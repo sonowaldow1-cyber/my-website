@@ -1,35 +1,64 @@
-:root{--blue:#1877f2;--card:#fff;--bg:#f0f2f5}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto; background:var(--bg); color:#111}
-.top{display:flex;align-items:center;gap:12px;padding:12px;background:var(--blue);color:#fff}
-.top h1{margin:0;font-size:18px}
-.mini{margin-left:auto;font-size:14px;opacity:0.95}
+import { getAuth, signInWithEmailAndPassword, 
+         createUserWithEmailAndPassword, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } 
+from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { app } from "./firebase.js";
 
-.container{display:grid;grid-template-columns:1fr;gap:12px;max-width:980px;margin:14px auto;padding:0 12px}
-@media(min-width:900px){.container{grid-template-columns:320px 1fr 320px}}
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-.card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 4px 18px rgba(0,0,0,0.08)}
-.card h2{margin-top:0}
-.row{display:flex;gap:8px;margin-top:8px}
-input,button{padding:8px;border-radius:8px;border:1px solid #ddd}
-button{cursor:pointer;background:#fff}
-button.primary{background:var(--blue);color:#fff;border:none}
+// Sign Up
+window.signUp = async function () {
+  const name = document.getElementById("signupName").value;
+  const dob = document.getElementById("signupDob").value;
+  const gender = document.getElementById("signupGender").value;
+  const email = document.getElementById("signupEmail").value;
+  const pass = document.getElementById("signupPassword").value;
 
-.small{display:flex;gap:8px;align-items:center}
-.muted{color:#666;font-size:13px}
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, pass);
+    await setDoc(doc(db, "users", res.user.uid), {
+      name, dob, gender, email
+    });
+    alert("🎉 Account created!");
+    window.location.href = "index.html";
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
+};
 
-.list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.request, .friend{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;border:1px solid #f0f0f0;background:#fafafa}
-.request .actions button{margin-left:6px}
+// Login
+window.login = async function () {
+  const email = document.getElementById("loginEmail").value;
+  const pass = document.getElementById("loginPassword").value;
 
-.messages{height:320px;overflow:auto;border:1px solid #eee;padding:8px;border-radius:8px;background:white}
-.msg{margin-bottom:8px;padding:8px;border-radius:8px;max-width:80%}
-.msg.me{margin-left:auto;background:#d1e7ff}
-.msg.you{background:#f1f1f1}
-.msg img{max-width:200px;border-radius:8px;margin-top:6px}
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    alert("✅ Logged in!");
+    window.location.href = "home.html";
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
+};
 
-.hidden{display:none}
-.foot{max-width:980px;margin:12px auto;text-align:center}
-#msg{margin-top:8px;padding:8px;border-radius:8px}
-.success{background:#e6ffed;border:1px solid #b8f0c6;color:#14532d}
-.error{background:#ffe6e6;border:1px solid #f3b3b3;color:#7a1a1a}
+// Logout
+window.logout = async function () {
+  await signOut(auth);
+  alert("🚪 Logged out!");
+  window.location.href = "index.html";
+};
+
+// Show Profile Data in home.html
+onAuthStateChanged(auth, async (user) => {
+  if (user && document.getElementById("profileCard")) {
+    const ref = doc(db, "users", user.uid);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      document.getElementById("profileName").innerText = snap.data().name;
+      document.getElementById("profileEmail").innerText = snap.data().email;
+      document.getElementById("profileDob").innerText = snap.data().dob;
+      document.getElementById("profileGender").innerText = snap.data().gender;
+    }
+  }
+});

@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - MySite</title>
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
 </head>
 <body>
   <div class="card">
@@ -15,12 +13,12 @@
     <input type="password" id="loginPassword" placeholder="Password">
     <button onclick="login()">Login</button>
 
-    <p>OR</p>
-    <button onclick="googleLogin()">Sign in with Google</button>
-
     <p>Don't have an account? 
       <a href="signup.html">Create new account</a>
     </p>
   </div>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
