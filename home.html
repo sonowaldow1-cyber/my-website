@@ -1,30 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="card">
+  <div class="container">
     <h2>👤 Profile Info</h2>
-    <p id="profileEmail"></p>
-    <button id="logoutBtn">Logout</button>
+    <div id="profile"></div>
+    <button onclick="logout()">🚪 Logout</button>
   </div>
 
-  <script type="module">
-    import { auth } from "./firebase.js";
-    import { logoutUser } from "./script.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        document.getElementById("profileEmail").innerText = "Email: " + user.email;
-      } else {
-        window.location.href = "index.html";
-      }
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", logoutUser);
-  </script>
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
