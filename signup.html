@@ -1,30 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - MySite</title>
+  <title>Sign Up</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="card">
     <h2>Create Account</h2>
-    <input type="text" id="signupName" placeholder="Full Name">
-    <input type="date" id="signupDob">
-    <select id="signupGender">
+    <input type="text" id="name" placeholder="Full Name"><br>
+    <input type="date" id="dob"><br>
+    <select id="gender">
       <option value="Male">Male</option>
       <option value="Female">Female</option>
-    </select>
-    <input type="email" id="signupEmail" placeholder="Email">
-    <input type="password" id="signupPassword" placeholder="Password">
-    <button onclick="signUp()">Sign Up</button>
-
-    <p>Already have an account? 
-      <a href="index.html">Back to Login</a>
-    </p>
+    </select><br>
+    <input type="email" id="signupEmail" placeholder="Email"><br>
+    <input type="password" id="signupPassword" placeholder="Password"><br>
+    <button id="signupBtn">Sign Up</button>
+    <p>Already have an account? <a href="index.html">Back to Login</a></p>
   </div>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+  <script type="module">
+    import { signupUser } from "./script.js";
+
+    document.getElementById("signupBtn").addEventListener("click", () => {
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      signupUser(email, password);
+    });
+  </script>
 </body>
 </html>

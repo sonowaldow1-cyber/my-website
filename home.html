@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - MySite</title>
+  <title>Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="card" id="profileCard">
+  <div class="card">
     <h2>👤 Profile Info</h2>
-    <p><b>Name:</b> <span id="profileName"></span></p>
-    <p><b>Email:</b> <span id="profileEmail"></span></p>
-    <p><b>Date of Birth:</b> <span id="profileDob"></span></p>
-    <p><b>Gender:</b> <span id="profileGender"></span></p>
-    <button onclick="logout()">🚪 Logout</button>
+    <p id="profileEmail"></p>
+    <button id="logoutBtn">Logout</button>
   </div>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+  <script type="module">
+    import { auth } from "./firebase.js";
+    import { logoutUser } from "./script.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("profileEmail").innerText = "Email: " + user.email;
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+  </script>
 </body>
 </html>

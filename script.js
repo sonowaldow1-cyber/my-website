@@ -1,64 +1,36 @@
-import { getAuth, signInWithEmailAndPassword, 
-         createUserWithEmailAndPassword, signOut, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } 
-from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-import { app } from "./firebase.js";
+// script.js
+import { auth } from "./firebase.js";
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-// Sign Up
-window.signUp = async function () {
-  const name = document.getElementById("signupName").value;
-  const dob = document.getElementById("signupDob").value;
-  const gender = document.getElementById("signupGender").value;
-  const email = document.getElementById("signupEmail").value;
-  const pass = document.getElementById("signupPassword").value;
-
+// SIGN UP
+export async function signupUser(email, password) {
   try {
-    const res = await createUserWithEmailAndPassword(auth, email, pass);
-    await setDoc(doc(db, "users", res.user.uid), {
-      name, dob, gender, email
-    });
-    alert("🎉 Account created!");
+    await createUserWithEmailAndPassword(auth, email, password);
+    alert("✅ Account Created! Please Login.");
     window.location.href = "index.html";
-  } catch (err) {
-    alert("❌ " + err.message);
+  } catch (error) {
+    alert("❌ Error: " + error.message);
   }
-};
+}
 
-// Login
-window.login = async function () {
-  const email = document.getElementById("loginEmail").value;
-  const pass = document.getElementById("loginPassword").value;
-
+// LOGIN
+export async function loginUser(email, password) {
   try {
-    await signInWithEmailAndPassword(auth, email, pass);
+    await signInWithEmailAndPassword(auth, email, password);
     alert("✅ Logged in!");
     window.location.href = "home.html";
-  } catch (err) {
-    alert("❌ " + err.message);
+  } catch (error) {
+    alert("❌ Error: " + error.message);
   }
-};
+}
 
-// Logout
-window.logout = async function () {
+// LOGOUT
+export async function logoutUser() {
   await signOut(auth);
   alert("🚪 Logged out!");
   window.location.href = "index.html";
-};
-
-// Show Profile Data in home.html
-onAuthStateChanged(auth, async (user) => {
-  if (user && document.getElementById("profileCard")) {
-    const ref = doc(db, "users", user.uid);
-    const snap = await getDoc(ref);
-    if (snap.exists()) {
-      document.getElementById("profileName").innerText = snap.data().name;
-      document.getElementById("profileEmail").innerText = snap.data().email;
-      document.getElementById("profileDob").innerText = snap.data().dob;
-      document.getElementById("profileGender").innerText = snap.data().gender;
-    }
-  }
-});
+}
