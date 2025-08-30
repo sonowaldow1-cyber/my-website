@@ -1,72 +1,19 @@
-<!DOCTYPE html>
-<html lang="as">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MyBook — Friends & Chat Demo</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="top">
-    <h1>MyBook</h1>
-    <div id="userMini" class="mini">Not signed in</div>
-  </header>
+<div id="signupForm">
+  <h2>Sign Up</h2>
+  <input type="text" id="signupName" placeholder="Name">
+  <input type="date" id="signupDob">
+  <select id="signupGender">
+    <option>Male</option>
+    <option>Female</option>
+  </select>
+  <input type="email" id="signupEmail" placeholder="Email">
+  <input type="password" id="signupPassword" placeholder="Password">
+  <button onclick="signUp()">Sign Up</button>
+</div>
 
-  <main class="container">
-    <!-- LEFT: Sign Up / Login (simple) -->
-    <section class="card" id="authCard">
-      <h2>Account</h2>
-      <input id="name" placeholder="Full name (signup)" />
-      <input id="email" placeholder="Email" />
-      <input id="password" type="password" placeholder="Password" />
-      <div class="row">
-        <button id="btnSignUp">Sign Up</button>
-        <button id="btnLogin">Login</button>
-        <button id="btnGoogle">Google</button>
-      </div>
-      <div id="msg" class="hidden"></div>
-    </section>
-
-    <!-- CENTER: Friend System -->
-    <section class="card" id="friendsCard">
-      <h2>Friends & Requests</h2>
-
-      <!-- Send request by email -->
-      <div class="small">
-        <input id="searchEmail" placeholder="Friend's email to add" />
-        <button id="btnSendRequest">Send Request</button>
-      </div>
-
-      <h3>Incoming Requests</h3>
-      <div id="incomingList" class="list"></div>
-
-      <h3>Outgoing Requests</h3>
-      <div id="outgoingList" class="list"></div>
-
-      <h3>Your Friends</h3>
-      <div id="friendsList" class="list"></div>
-    </section>
-
-    <!-- RIGHT: Chat -->
-    <section class="card" id="chatCard">
-      <h2>Chat</h2>
-      <div id="chatWith" class="small muted">Select a friend to chat</div>
-
-      <div id="messages" class="messages"></div>
-
-      <div id="chatControls" class="hidden">
-        <input id="msgText" placeholder="Write a message..." />
-        <input id="imgFile" type="file" accept="image/*" />
-        <button id="btnSend">Send</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <button id="btnLogout">Logout</button>
-  </footer>
-
-  <!-- Firebase + App logic -->
-  <script type="module" src="script.js"></script>
-</body>
-</html>
+<div id="loginForm" style="display:none;">
+  <h2>Login</h2>
+  <input type="email" id="loginEmail" placeholder="Email">
+  <input type="password" id="loginPassword" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
