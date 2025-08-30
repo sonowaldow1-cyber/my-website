@@ -1,9 +1,16 @@
-import { auth } from "./firebase.js";
+import { auth, db, storage } from "./firebase.js";
 import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { 
+  collection, addDoc, getDocs, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { 
+  ref, uploadBytes, getDownloadURL 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 // SIGN UP
 window.signUp = function () {
@@ -14,18 +21,15 @@ window.signUp = function () {
   const password = document.getElementById("password").value;
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(() => {
       localStorage.setItem("name", name);
       localStorage.setItem("dob", dob);
       localStorage.setItem("gender", gender);
       localStorage.setItem("email", email);
-
-      document.getElementById("status").innerText = "✅ Sign Up Successful!";
-      setTimeout(() => window.location.href = "home.html", 1000);
+      alert("✅ Sign Up Successful!");
+      window.location.href = "home.html";
     })
-    .catch((error) => {
-      document.getElementById("status").innerText = "❌ " + error.message;
-    });
+    .catch(err => alert("❌ " + err.message));
 };
 
 // LOGIN
@@ -34,32 +38,52 @@ window.login = function () {
   const password = document.getElementById("loginPassword").value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(() => {
       localStorage.setItem("email", email);
-      document.getElementById("status").innerText = "✅ Login Successful!";
-      setTimeout(() => window.location.href = "home.html", 1000);
+      alert("✅ Login Successful!");
+      window.location.href = "home.html";
     })
-    .catch((error) => {
-      document.getElementById("status").innerText = "❌ " + error.message;
-    });
+    .catch(err => alert("❌ " + err.message));
+};
+
+// FORGOT PASSWORD
+window.forgotPassword = function () {
+  const email = prompt("Enter your email:");
+  sendPasswordResetEmail(auth, email)
+    .then(() => alert("📩 Reset link sent to " + email))
+    .catch(err => alert("❌ " + err.message));
 };
 
 // LOGOUT
 window.logout = function () {
   signOut(auth).then(() => {
     localStorage.clear();
-    alert("🚪 Logged Out");
+    alert("🚪 Logged out!");
     window.location.href = "index.html";
   });
 };
 
-// SHOW PROFILE
-if (window.location.pathname.includes("home.html")) {
-  const profileDiv = document.getElementById("profile");
-  profileDiv.innerHTML = `
-    <p><b>Name:</b> ${localStorage.getItem("name")}</p>
-    <p><b>Email:</b> ${localStorage.getItem("email")}</p>
-    <p><b>DOB:</b> ${localStorage.getItem("dob")}</p>
-    <p><b>Gender:</b> ${localStorage.getItem("gender")}</p>
-  `;
-}
+// SEND CHAT MESSAGE
+window.sendMessage = async function () {
+  const message = document.getElementById("chatInput").value;
+  if (!message) return;
+  await addDoc(collection(db, "messages"), {
+    text: message,
+    user: localStorage.getItem("email"),
+    time: serverTimestamp()
+  });
+  document.getElementById("chatInput").value = "";
+  alert("💬 Message sent!");
+};
+
+// PHOTO UPLOAD
+window.uploadPhoto = async function () {
+  const file = document.getElementById("photoInput").files[0];
+  if (!file) return alert("Please select a file");
+
+  const storageRef = ref(storage, "uploads/" + file.name);
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+
+  alert("📸 Uploaded! File URL: " + url);
+};

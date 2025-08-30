@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Home</title>
+  <title>Dating App - Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h2>👤 Profile Info</h2>
-    <div id="profile"></div>
+    <h2>👥 Friends</h2>
+    <div id="friendsList"></div>
+
+    <h2>💬 Chat</h2>
+    <div id="chatBox"></div>
+    <input type="text" id="chatInput" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button><br><br>
+
+    <h2>📸 Upload Photo</h2>
+    <input type="file" id="photoInput">
+    <button onclick="uploadPhoto()">Upload</button>
+
+    <br><br>
     <button onclick="logout()">🚪 Logout</button>
   </div>
 
