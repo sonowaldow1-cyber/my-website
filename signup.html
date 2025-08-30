@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - MySite</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h2>Create Account</h2>
+    <input type="text" id="signupName" placeholder="Full Name">
+    <input type="date" id="signupDob">
+    <select id="signupGender">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+    <input type="email" id="signupEmail" placeholder="Email">
+    <input type="password" id="signupPassword" placeholder="Password">
+    <button onclick="signUp()">Sign Up</button>
+
+    <p>Already have an account? 
+      <a href="index.html">Back to Login</a>
+    </p>
+  </div>
+</body>
+</html>

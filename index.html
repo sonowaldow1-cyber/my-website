@@ -1,19 +1,26 @@
-<div id="signupForm">
-  <h2>Sign Up</h2>
-  <input type="text" id="signupName" placeholder="Name">
-  <input type="date" id="signupDob">
-  <select id="signupGender">
-    <option>Male</option>
-    <option>Female</option>
-  </select>
-  <input type="email" id="signupEmail" placeholder="Email">
-  <input type="password" id="signupPassword" placeholder="Password">
-  <button onclick="signUp()">Sign Up</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - MySite</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <div class="card">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
 
-<div id="loginForm" style="display:none;">
-  <h2>Login</h2>
-  <input type="email" id="loginEmail" placeholder="Email">
-  <input type="password" id="loginPassword" placeholder="Password">
-  <button onclick="login()">Login</button>
-</div>
+    <p>OR</p>
+    <button onclick="googleLogin()">Sign in with Google</button>
+
+    <p>Don't have an account? 
+      <a href="signup.html">Create new account</a>
+    </p>
+  </div>
+</body>
+</html>
