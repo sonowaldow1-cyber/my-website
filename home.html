@@ -2,28 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dating App - Home</title>
+  <title>Home - Social Clone</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container">
-    <h2>👥 Friends</h2>
-    <div id="friendsList"></div>
-
-    <h2>💬 Chat</h2>
-    <div id="chatBox"></div>
-    <input type="text" id="chatInput" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send</button><br><br>
-
-    <h2>📸 Upload Photo</h2>
-    <input type="file" id="photoInput">
-    <button onclick="uploadPhoto()">Upload</button>
-
-    <br><br>
-    <button onclick="logout()">🚪 Logout</button>
+<body class="home-page">
+  <!-- Navbar -->
+  <div class="navbar">
+    <h2>Social Clone</h2>
+    <button onclick="logout()">Logout</button>
   </div>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3>Menu</h3>
+      <ul>
+        <li>Profile</li>
+        <li>Friends</li>
+        <li>Messages</li>
+      </ul>
+    </div>
+
+    <!-- Feed -->
+    <div class="feed">
+      <h3>News Feed</h3>
+      <div class="post-box">
+        <textarea placeholder="What's on your mind?"></textarea>
+        <button>Post</button>
+      </div>
+      <div class="post">
+        <p><strong>User1</strong>: Hello World! 🌍</p>
+      </div>
+    </div>
+
+    <!-- Chat Sidebar -->
+    <div class="chatbar">
+      <h3>Chat</h3>
+      <p>Friend 1</p>
+      <p>Friend 2</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
